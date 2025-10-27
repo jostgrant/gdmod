@@ -1,0 +1,17 @@
+{{- define "main" }}
+<div class="single-page">
+    <div class="container">
+        <article class="content">
+            <header class="content-header">
+                <h1>{{ .Title }}</h1>
+                {{ if .Date }}
+                <time class="content-date">{{ .Date.Format "January 2, 2006" }}</time>
+                {{ end }}
+            </header>
+            <div class="content-body">
+                {{ .Content }}
+            </div>
+        </article>
+    </div>
+</div>
+{{- end }}

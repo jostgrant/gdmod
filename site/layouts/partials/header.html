@@ -1,0 +1,22 @@
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <a href="{{ .Site.BaseURL }}" class="logo">
+                <div class="logo-icon">
+                    <span class="logo-text">gd</span>
+                </div>
+                <h1 class="logo-title">mod</h1>
+            </a>
+            
+            <nav class="navigation">
+                <ul class="nav">
+                    {{ range .Site.Menus.main }}
+                    <li class="nav-item">
+                        <a href="{{ .URL }}" class="nav-link">{{ .Name }}</a>
+                    </li>
+                    {{ end }}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
