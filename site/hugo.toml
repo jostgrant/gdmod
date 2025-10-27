@@ -1,4 +1,4 @@
-baseURL = '/'
+baseURL = 'https://jostgrant.github.io/gdmod/'
 languageCode = 'en-us'
 title = 'mod - Godot Sandbox / Playground'
 publishDir = '../docs'
