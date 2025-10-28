@@ -27,6 +27,9 @@ func _physics_process(delta):
 	else:
 		player_api.player_movement.physics_process(delta)
 	
+	# Check for height-based respawn
+	check_height_respawn()
+	
 	# Update camera
 	player_api.player_camera.update_head_bob(delta)
 	player_api.player_camera.update_camera_position(delta)
@@ -40,6 +43,13 @@ func get_camera() -> Camera3D:
 
 func get_camera_controller() -> Node3D:
 	return player_api.get_camera_controller()
+
+func check_height_respawn():
+	# Check if player has fallen too far or risen too high
+	var current_height = global_position.y
+	if current_height <= -1000.0 or current_height >= 1000.0:
+		print("Player reached extreme height (", current_height, "), teleporting back to spawn...")
+		player_api.player_health.teleport_to_spawn()
 
 func apply_blue_material():
 	# Force apply blue material to ensure visibility

@@ -110,6 +110,14 @@ func respawn():
 	health_changed.emit(current_health, MAX_HEALTH)
 	player_respawned.emit()
 
+func teleport_to_spawn():
+	# Teleport player back to spawn without death requirement
+	print("Teleporting player to spawn at ", spawn_position)
+	player.global_position = spawn_position
+	player.velocity = Vector3.ZERO
+	damage_immunity_timer = damage_immunity_duration  # Brief immunity after teleport
+	player_respawned.emit()
+
 func set_spawn_point(position: Vector3):
 	spawn_position = position
 	print("Spawn point set to: ", spawn_position)
