@@ -1,0 +1,232 @@
+[gd_scene load_steps=4 format=3 uid="uid://bk7hvj2hdivd6"]
+
+[ext_resource type="PackedScene" uid="uid://bxlgthqsm5vr4" path="res://_scenes/Player.tscn" id="1_n6kb7"]
+[ext_resource type="Script" path="res://_interfaces/UI.gd" id="2_ui"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_RedBox"]
+albedo_color = Color(1, 0.2, 0.2, 1)
+metallic = 0.2
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_GreenBox"]
+albedo_color = Color(0.2, 1, 0.2, 1)
+metallic = 0.2
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_BlueBox"]
+albedo_color = Color(0.2, 0.2, 1, 1)
+metallic = 0.2
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_Small"]
+size = Vector3(1, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_Small"]
+size = Vector3(1, 1, 1)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_Box1"]
+friction = 0.8
+bounce = 0.2
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_Box2"]
+friction = 0.6
+bounce = 0.4
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_Box3"]
+friction = 1.0
+bounce = 0.1
+
+[node name="Main" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("1_n6kb7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="Ground" type="StaticBody3D" parent="Environment"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("BoxMesh_1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_1")
+
+[node name="TestPlatform1" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/TestPlatform1"]
+transform = Transform3D(3, 0, 0, 0, 0.5, 0, 0, 0, 3, 0, 0, 0)
+mesh = SubResource("BoxMesh_1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/TestPlatform1"]
+transform = Transform3D(3, 0, 0, 0, 0.5, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("BoxShape3D_1")
+
+[node name="TestPlatform2" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 4, 5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/TestPlatform2"]
+transform = Transform3D(2, 0, 0, 0, 0.3, 0, 0, 0, 2, 0, 0, 0)
+mesh = SubResource("BoxMesh_1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/TestPlatform2"]
+transform = Transform3D(2, 0, 0, 0, 0.3, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("BoxShape3D_1")
+
+[node name="TestWall" type="StaticBody3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, -8)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/TestWall"]
+transform = Transform3D(8, 0, 0, 0, 6, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/TestWall"]
+transform = Transform3D(8, 0, 0, 0, 6, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_1")
+
+[node name="Items" type="Node3D" parent="."]
+
+[node name="MovableBox1" type="RigidBody3D" parent="Items"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2, 2)
+mass = 5.0
+physics_material_override = SubResource("PhysicsMaterial_Box1")
+linear_damp = 2.0
+angular_damp = 5.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Items/MovableBox1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_Small")
+material_override = SubResource("StandardMaterial3D_RedBox")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Items/MovableBox1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_Small")
+
+[node name="MovableBox2" type="RigidBody3D" parent="Items"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, 3)
+mass = 3.0
+physics_material_override = SubResource("PhysicsMaterial_Box2")
+linear_damp = 1.5
+angular_damp = 4.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Items/MovableBox2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_Small")
+material_override = SubResource("StandardMaterial3D_GreenBox")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Items/MovableBox2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_Small")
+
+[node name="MovableBox3" type="RigidBody3D" parent="Items"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, -2)
+mass = 10.0
+physics_material_override = SubResource("PhysicsMaterial_Box3")
+linear_damp = 3.0
+angular_damp = 6.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Items/MovableBox3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_Small")
+material_override = SubResource("StandardMaterial3D_BlueBox")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Items/MovableBox3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_Small")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 5, 0)
+light_energy = 1.0
+shadow_enabled = true
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource("2_ui")
+
+[node name="Crosshair" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+mouse_filter = 2
+
+[node name="CrosshairLines" type="Control" parent="UI/Crosshair"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="HorizontalLine" type="ColorRect" parent="UI/Crosshair/CrosshairLines"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -1.0
+offset_right = 6.0
+offset_bottom = 1.0
+color = Color(1, 1, 1, 0.8)
+
+[node name="VerticalLine" type="ColorRect" parent="UI/Crosshair/CrosshairLines"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = -6.0
+offset_right = 1.0
+offset_bottom = 6.0
+color = Color(1, 1, 1, 0.8)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+layout_mode = 0
+anchors_preset = 1
+anchor_top = 0.0
+anchor_bottom = 0.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 300.0
+offset_bottom = 200.0
+
+[node name="StatusLabel" type="Label" parent="UI/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+text = "Status"
+
+[node name="ControlsLabel" type="Label" parent="UI/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 12
+text = "Controls"
